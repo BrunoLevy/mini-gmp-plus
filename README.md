@@ -1,6 +1,7 @@
 # mini-gmp-plus
 
-The mini version of the GNU Multi-Precision library,
+This is a fork of the mini version of the 
+[GNU Multi-Precision library](https://gmplib.org/)
 with some patches/optimizations for usage in numerical geometry (my changes
 indicated with a [Bruno] tag).
 
