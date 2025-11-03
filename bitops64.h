@@ -167,7 +167,7 @@ BITOPS64_INLINE uint64_t bitops64_lshift128(
  * \param[in] shift the shift, in [0,64[
  * \return the most significant limb of (high:low) << shift
  */
-inline uint64_t bitops64_lshift128(uint64_t high, uint64_t low, int shift) {
+BITOPS64_INLINE uint64_t bitops64_lshift128(uint64_t high, uint64_t low, int shift) {
     return (shift == 0) ? // shifting by 64 bits is UB
 	high : ((high << shift) | (low >> (64 - shift)));
 }
