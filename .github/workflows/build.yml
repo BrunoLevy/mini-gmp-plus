@@ -32,7 +32,7 @@ jobs:
 
       - name: Configure
         run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} \
-                            -DMINI_GMP_PLUS_WITH_TESTS=1
+        -DMINI_GMP_PLUS_WITH_TESTS=1
 
       - name: Build
         run: cmake --build build --config ${{ matrix.config }}
