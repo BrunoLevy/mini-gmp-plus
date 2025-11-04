@@ -17,7 +17,7 @@ endif()
 #  did not manage to make it work the clean way under Windows, so I'm
 #  getting the include files and libs where they are...
 #   include_directories(${VCPKG_ROOT}/installed/x64-windows/include)
-#   link_directories(${VCPKG_ROOT}/installed/x64-windows/lib/manual-link)
+#   link_directories(${VCPKG_ROOT}/installed/x64-windows/lib)
 #else()
 
 #   for PkgConfig and gmp to work (see .github/Workflows/build.yml)
@@ -49,12 +49,12 @@ set(MINI_GMP_TESTS
 
 foreach(T ${MINI_GMP_TESTS})
    add_executable(${T} ${T}.c)
-if(WIN32)
-   target_link_libraries(${T} mini-gmp-plus mini-gmp-plus-test-lib gmp m)
-else()
+#if(WIN32)
+#   target_link_libraries(${T} mini-gmp-plus mini-gmp-plus-test-lib gmp m)
+#else()
    target_link_libraries(
        ${T} mini-gmp-plus mini-gmp-plus-test-lib PkgConfig::gmp m
    )
-endif()
+#endif()
    add_test(NAME ${T} COMMAND ${T})
 endforeach()
