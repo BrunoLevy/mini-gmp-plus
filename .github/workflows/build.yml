@@ -34,6 +34,7 @@ jobs:
       - name: Prerequisites (Windows)
         if: runner.os == 'Windows'
         run: |
+           cd ..
            git clone https://github.com/Microsoft/vcpkg --depth=1
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
            vcpkg install pkgconf
@@ -48,6 +49,7 @@ jobs:
            dir installed\\x64-windows\\include
            dir installed\\x64-windows\\lib
            vcpkg install gmp
+           tree
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,7 +57,9 @@ jobs:
           submodules: recursive
 
       - name: Configure
-        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DMINI_GMP_PLUS_WITH_TESTS=1
+        run: |
+           pwd
+           cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DMINI_GMP_PLUS_WITH_TESTS=1
 
       - name: Build
         run: cmake --build build --config ${{ matrix.config }}
