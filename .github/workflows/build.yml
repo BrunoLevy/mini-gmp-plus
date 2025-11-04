@@ -29,7 +29,9 @@ jobs:
       - name: GMP (Windows)
         if: runner.os == 'Windows'
         run: |
-           echo "TODO: install GMP"
+           git clone https://github.com/Microsoft/vcpkg --depth=1
+           cd vcpkg; cmd /c bootstrap-vcpkg.bat
+           vcpkg install gmp
 
       - name: Checkout repository
         uses: actions/checkout@v4
