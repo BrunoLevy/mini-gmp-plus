@@ -45,6 +45,8 @@ jobs:
            dir installed\\x64-windows\\tools
            dir installed\\x64-windows\\tools\\pkgconf
            dir installed\\x64-windows\\share
+           dir installed\\x64-windows\\include
+           dir installed\\x64-windows\\lib
            vcpkg install gmp
 
       - name: Checkout repository
