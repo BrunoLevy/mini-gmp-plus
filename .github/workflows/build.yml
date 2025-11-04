@@ -39,6 +39,7 @@ jobs:
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
            vcpkg install pkgconf
            vcpkg install gmp
+           echo $PSScriptRoot/../vcpkg/installed/x64-windows/bin >> $GITHUB_PATH
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -53,15 +54,7 @@ jobs:
       - name: Build
         run: cmake --build build --config ${{ matrix.config }}
 
-      - name: Test (Windows)
-        if: runner.os == 'Windows'
+      - name: Test
         run: |
-            set PATH=%cd%/../vcpkg/installed/x64-windows/bin;%PATH%
-            echo %PATH%
-            cd build/tests
-            ctest -C ${{ matrix.config }}
-
-      - name: Test (Linux,MacOS)
-        if: runner.os != 'Windows'
-        run: |
+            echo $PATH
             cd build/tests; ctest -C ${{ matrix.config }}
