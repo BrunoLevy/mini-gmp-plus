@@ -13,13 +13,17 @@
 #include <assert.h>
 
 #if defined(__GNUC__)
-#define BITOPS64_INLINE inline __attribute__((always_inline))
+#  define BITOPS64_INLINE inline __attribute__((always_inline))
 #elif defined(_MSC_VER)
-#include <intrin.h>
-#pragma intrinsic(_BitScanForward)
-#pragma intrinsic(_BitScanBackward)
-#pragma intrinsic(_shiftleft128)
-#define BITOPS64_INLINE __forceinline
+#  include <intrin.h>
+#  pragma intrinsic(_BitScanForward)
+#  pragma intrinsic(_BitScanBackward)
+#  pragma intrinsic(_shiftleft128)
+#  define BITOPS64_INLINE __forceinline
+#  if _WIN64
+#  else
+#    error Needs 64 bits
+#  endif
 #endif
 
 
