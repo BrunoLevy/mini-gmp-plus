@@ -13,7 +13,7 @@ if(WIN32)
 #  getting the include files and libs where they are...
    set(VCPKG_ROOT ${CMAKE_SOURCE_DIR}/../vcpkg)
    include_directories(${VCPKG_ROOT}/installed/x64-windows/include)
-   link_directories(${VCPKG_ROOT}/installed/x64-windows/lib)
+   link_directories(${VCPKG_ROOT}/installed/x64-windows/lib/manual-link)
 else()
 #   for PkgConfig and gmp to work (see .github/Workflows/build.yml)
 #   under MacOS: brew install pkgconf
