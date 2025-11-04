@@ -57,4 +57,4 @@ jobs:
 
       - name: Test
         run: |
-            cd build/tests; ctest
+            cd build/tests; ctest -C ${{ matrix.config }}
