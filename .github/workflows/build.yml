@@ -37,17 +37,8 @@ jobs:
            cd ..
            git clone https://github.com/Microsoft/vcpkg --depth=1
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
+           pwd
            vcpkg install pkgconf
-           dir
-           dir installed
-           dir installed\\vcpkg
-           dir installed\\x64-windows
-           dir installed\\x64-windows\\bin
-           dir installed\\x64-windows\\tools
-           dir installed\\x64-windows\\tools\\pkgconf
-           dir installed\\x64-windows\\share
-           dir installed\\x64-windows\\include
-           dir installed\\x64-windows\\lib
            vcpkg install gmp
            tree
 

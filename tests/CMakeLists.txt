@@ -4,17 +4,22 @@
 include(CTest)
 enable_testing()
 
-#if(WIN32)
-#   set(PKG_CONFIG_EXECUTABLE "D:\\a\\mini-gmp-plus\\mini-gmp-plus\\vcpkg\\installed\\x64-windows\\tools\\pkgconf\\pkgconf.exe")
-#endif()
-
 if(WIN32)
+   set(VCPKG_ROOT ${CMAKE_SOURCE_DIR}/../vcpkg)
+   set(PKG_CONFIG_EXECUTABLE ${VCPKG_ROOT}/installed/x64-windows/tools/pkgconf/pkgconf.exe)
+   set(ENV{PKG_CONFIG_PATH} ${VCPKG_ROOT}/installed/x64-windows/lib/pkgconfig)
+   execute_process(COMMAND dir ${VCPKG_ROOT})
+   execute_process(COMMAND dir ${PKG_CONFIG_EXECUTABLE})
+   execute_process(COMMAND dir $ENV{PKG_CONFIG_PATH})
+endif()
+
+#if(WIN32)
 #  did not manage to make it work the clean way under Windows, so I'm
 #  getting the include files and libs where they are...
-   set(VCPKG_ROOT ${CMAKE_SOURCE_DIR}/../vcpkg)
-   include_directories(${VCPKG_ROOT}/installed/x64-windows/include)
-   link_directories(${VCPKG_ROOT}/installed/x64-windows/lib/manual-link)
-else()
+#   include_directories(${VCPKG_ROOT}/installed/x64-windows/include)
+#   link_directories(${VCPKG_ROOT}/installed/x64-windows/lib/manual-link)
+#else()
+
 #   for PkgConfig and gmp to work (see .github/Workflows/build.yml)
 #   under MacOS: brew install pkgconf
 #   under Windows:
@@ -25,7 +30,8 @@ else()
    find_package(PkgConfig REQUIRED)
    pkg_check_modules(gmp REQUIRED IMPORTED_TARGET gmp)
    include_directories(${gmp_INCLUDE_DIRS})
-endif()
+
+#endif()
 
 
 # These three files are systematically used by each test, made it an object lib
