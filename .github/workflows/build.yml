@@ -37,10 +37,8 @@ jobs:
            cd ..
            git clone https://github.com/Microsoft/vcpkg --depth=1
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
-           pwd
            vcpkg install pkgconf
            vcpkg install gmp
-           tree
 
       - name: Checkout repository
         uses: actions/checkout@v4
