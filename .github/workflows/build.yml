@@ -26,9 +26,9 @@ jobs:
             name: Windows
     steps:
 
-      - name: GMP (MacOS)
-        if: runner.os == 'MacOS'
-        run: find /opt/homebrew -name '*gmp*' -print
+      - name: GMP (Windows)
+        if: runner.os == 'Windows'
+        run: echo "TODO: install GMP"
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -43,4 +43,4 @@ jobs:
 
       - name: Test
         run: |
-            cd tests; pwd; ls; ctest
+            cd build/tests; ctest
