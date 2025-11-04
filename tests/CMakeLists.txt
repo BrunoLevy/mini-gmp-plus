@@ -9,6 +9,8 @@ enable_testing()
    pkg_check_modules(gmp REQUIRED IMPORTED_TARGET gmp)
 #endif()
 
+include_directories(${gmp_INCLUDE_DIRS})
+
 add_library(mini-gmp-plus-test-lib OBJECT hex-random.c mini-random.c testutils.c)
 
 set(MINI_GMP_TESTS
