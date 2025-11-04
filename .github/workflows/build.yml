@@ -39,7 +39,12 @@ jobs:
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
            vcpkg install pkgconf
            vcpkg install gmp
-           echo $PSScriptRoot/../vcpkg/installed/x64-windows/bin >> $GITHUB_PATH
+
+      - name: Path (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+           echo "${{ github.workspace }}\vcpkg\installed\x64-windows\bin" >> $GITHUB_PATH
 
       - name: Checkout repository
         uses: actions/checkout@v4
