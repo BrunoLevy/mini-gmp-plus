@@ -40,7 +40,7 @@ jobs:
            echo $PATH
            tagada
 
-- name: Prerequisites (macOS)
+      - name: Prerequisites (macOS)
         if: runner.os == 'macOS'
         run: |
            brew install pkgconf
