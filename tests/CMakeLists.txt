@@ -1,14 +1,16 @@
 include(CTest)
 enable_testing()
 
-if(APPLE)
-   include_directories("/opt/homebrew/include")
-   link_directories("/opt/homebrew/lib")
-endif()
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(gmp REQUIRED IMPORTED_TARGET gmp)
+
+
+#if(APPLE)
+#   include_directories("/opt/homebrew/include")
+#   link_directories("/opt/homebrew/lib")
+#endif()
 
 add_library(mini-gmp-plus-test-lib OBJECT hex-random.c mini-random.c testutils.c)
-
-
 
 set(MINI_GMP_TESTS
    t-add t-sub t-mul t-invert t-div t-div_2exp
@@ -21,6 +23,6 @@ set(MINI_GMP_TESTS
 
 foreach(T ${MINI_GMP_TESTS})
    add_executable(${T} ${T}.c)
-   target_link_libraries(${T} mini-gmp-plus mini-gmp-plus-test-lib gmp m)
+   target_link_libraries(${T} mini-gmp-plus mini-gmp-plus-test-lib PkgConfig::gmp m)
    add_test(NAME ${T} COMMAND ${T})
 endforeach()

@@ -31,7 +31,7 @@ jobs:
         run: |
            git clone https://github.com/Microsoft/vcpkg --depth=1
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
-           vcpkg install gmp
+           vcpkg install --triplet=x64-windows-static gmp
 
       - name: Checkout repository
         uses: actions/checkout@v4
