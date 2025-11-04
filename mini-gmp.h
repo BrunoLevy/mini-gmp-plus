@@ -45,11 +45,26 @@ see https://www.gnu.org/licenses/.  */
 #include <stdint.h>
 
 /* [Bruno] import / export linkage specs */
-#ifdef GMPEXT_STANDALONE
-#define MINI_GMP_PLUS_API
+
+#if defined(_MSC_VER)
+#  define MINI_GMP_PLUS_IMPORT __declspec(dllimport)
+#  define MINI_GMP_PLUS_EXPORT __declspec(dllexport)
+#elif defined(__GNUC__)
+#  define MINI_GMP_PLUS_IMPORT
+#  define MINI_GMP_PLUS_EXPORT __attribute__ ((visibility("default")))
 #else
-#include <geogram/api/defs.h>
-#define MINI_GMP_PLUS_API GEOGRAM_API
+#  define MINI_GMP_PLUS_IMPORT
+#  define MINI_GMP_PLUS_EXPORT
+#endif
+
+#ifdef GMPEXT_STANDALONE
+#  define MINI_GMP_PLUS_API
+#else
+#  ifdef mini_gmp_plus_EXPORTS
+#    define MINI_GMP_PLUS_API MINI_GMP_PLUS_EXPORT
+#  else
+#    define MINI_GMP_PLUS_API MINI_GMP_PLUS_IMPORT
+#  endif
 #endif
 
 #if defined (__cplusplus)
