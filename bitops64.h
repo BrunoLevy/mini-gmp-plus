@@ -17,8 +17,8 @@
 #elif defined(_MSC_VER)
 #  include <intrin.h>
 #  pragma intrinsic(_BitScanForward)
-#  pragma intrinsic(_BitScanBackward)
-#  pragma intrinsic(_shiftleft128)
+#  pragma intrinsic(_BitScanReverse)
+#  pragma intrinsic(__shiftleft128)
 #  define BITOPS64_INLINE __forceinline
 #  if _WIN64
 #  else
@@ -109,7 +109,7 @@ BITOPS64_INLINE uint64_t bitops64_lshift128(
 BITOPS64_INLINE int bitops64_clz_nonzero(uint64_t x) {
     assert(x != 0);
     unsigned long index;
-    _BitScanBackward64(&index, x);
+    _BitScanReverse64(&index, x);
     return (int)index;
 }
 
@@ -121,7 +121,7 @@ BITOPS64_INLINE int bitops64_clz_nonzero(uint64_t x) {
  */
 BITOPS64_INLINE int bitops64_clz(uint64_t x) {
     unsigned long index;
-    return _BitScanBackward64(&index, x) ? (int)index : 64;
+    return _BitScanReverse64(&index, x) ? (int)index : 64;
 }
 
 /**
@@ -158,7 +158,7 @@ BITOPS64_INLINE int bitops64_ctz(uint64_t x) {
 BITOPS64_INLINE uint64_t bitops64_lshift128(
     uint64_t high, uint64_t low, int shift
 ) {
-    return shiftleft128(low, high, (char)shift);
+    return __shiftleft128(low, high, (char)shift);
 }
 
 #else
