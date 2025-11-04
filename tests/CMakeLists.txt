@@ -5,7 +5,7 @@ include(CTest)
 enable_testing()
 
 if(WIN32)
-   set(PKG_CONFIG_EXECUTABLE "D:\a\mini-gmp-plus\mini-gmp-plus\vcpkg\installed\x64-windows\share\pkgconf")
+   set(PKG_CONFIG_EXECUTABLE "D:\a\mini-gmp-plus\mini-gmp-plus\vcpkg\installed\x64-windows\tools\pkgconf")
 endif()
 
 
