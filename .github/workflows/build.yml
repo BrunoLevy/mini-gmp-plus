@@ -28,7 +28,8 @@ jobs:
 
       - name: GMP (Windows)
         if: runner.os == 'Windows'
-           run: echo "TODO: install GMP"
+        run: |
+           echo "TODO: install GMP"
 
       - name: Checkout repository
         uses: actions/checkout@v4
