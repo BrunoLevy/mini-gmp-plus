@@ -39,8 +39,9 @@ jobs:
            vcpkg install pkgconf
            dir
            dir installed
-           dir installed\\x64-windows
            dir installed\\vcpkg
+           dir installed\\x64-windows
+           dir installed\\x64-windows\\bin
            dir bin
            vcpkg install gmp
 
