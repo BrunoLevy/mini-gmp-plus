@@ -26,11 +26,17 @@ jobs:
             name: Windows
     steps:
 
+      - name: pkgconf (macOS)
+        if: runner.os == 'macOS'
+        run: |
+           brew install pkgconf
+
       - name: GMP (Windows)
         if: runner.os == 'Windows'
         run: |
            git clone https://github.com/Microsoft/vcpkg --depth=1
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
+           vcpkg install pkgconf
            vcpkg install --triplet=x64-windows-static gmp
 
       - name: Checkout repository
