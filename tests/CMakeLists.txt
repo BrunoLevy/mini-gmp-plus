@@ -2,8 +2,8 @@ include(CTest)
 enable_testing()
 
 if(APPLE)
-   add_include_directories("/opt/homebrew/include")
-   add_link_directories("/opt/homebrew/lib")
+   include_directories("/opt/homebrew/include")
+   link_directories("/opt/homebrew/lib")
 endif()
 
 add_library(mini-gmp-plus-test-lib OBJECT hex-random.c mini-random.c testutils.c)
