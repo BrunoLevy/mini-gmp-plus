@@ -28,7 +28,7 @@ jobs:
 
       - name: GMP (MacOS)
         if: runner.os == 'MacOS'
-        run: brew install gmp
+        run: find /usr /opt -name "gmp.h"
 
       - name: Checkout repository
         uses: actions/checkout@v4
