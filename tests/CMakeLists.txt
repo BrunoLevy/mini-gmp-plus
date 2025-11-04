@@ -49,12 +49,14 @@ set(MINI_GMP_TESTS
 
 foreach(T ${MINI_GMP_TESTS})
    add_executable(${T} ${T}.c)
-#if(WIN32)
-#   target_link_libraries(${T} mini-gmp-plus mini-gmp-plus-test-lib gmp m)
-#else()
+if(WIN32)
+   target_link_libraries(
+       ${T} mini-gmp-plus mini-gmp-plus-test-lib PkgConfig::gmp 
+   )
+else()
    target_link_libraries(
        ${T} mini-gmp-plus mini-gmp-plus-test-lib PkgConfig::gmp m
    )
-#endif()
+endif()
    add_test(NAME ${T} COMMAND ${T})
 endforeach()
