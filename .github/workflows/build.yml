@@ -38,7 +38,7 @@ jobs:
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
            vcpkg install pkgconf
            dir
-           dir installed
+           dir /s installed
            dir bin
            vcpkg install gmp
 
