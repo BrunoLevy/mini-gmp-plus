@@ -25,6 +25,11 @@ jobs:
           - os: windows-2022
             name: Windows
     steps:
+
+      - name: GMP (MacOS)
+        if: runner.os == 'MacOS'
+        run: brew install gmp
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
