@@ -25,7 +25,7 @@ else()
    find_package(PkgConfig REQUIRED)
    pkg_check_modules(gmp REQUIRED IMPORTED_TARGET gmp)
    include_directories(${gmp_INCLUDE_DIRS})
-endif
+endif()
 
 
 # These three files are systematically used by each test, made it an object lib
