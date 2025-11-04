@@ -38,5 +38,4 @@ jobs:
 
       - name: Test
         run: |
-            cd tests;\
-            ctest
+            cd tests; ctest
