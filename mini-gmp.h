@@ -337,6 +337,10 @@ MINI_GMP_PLUS_API size_t mpz_out_str (FILE *, int, const mpz_t);
 MINI_GMP_PLUS_API void mpz_import (mpz_t, size_t, int, size_t, int, size_t, const void *);
 MINI_GMP_PLUS_API void *mpz_export (void *, size_t *, int, size_t, int, size_t, const mpz_t);
 
+/* [Bruno] made this function public (used in the tests) */
+MINI_GMP_PLUS_API int gmp_lucas_mod (mpz_t V, mpz_t Qk, long Q, mp_bitcnt_t b0, const mpz_t n);
+
+
 #if defined (__cplusplus)
 }
 #endif

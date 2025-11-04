@@ -3589,13 +3589,13 @@ gmp_lucas_step_k_2k (mpz_t V, mpz_t Qk, const mpz_t n)
   mpz_mul (Qk, Qk, Qk);
 }
 
+/* [Bruno] Made this function public (used by tests) */
 /* Computes V_k, Q^k (mod n) for the Lucas' sequence */
 /* with P=1, Q=Q; k = (n>>b0)|1. */
 /* Requires an odd n > 4; b0 > 0; -2*Q must not overflow a long */
 /* Returns (U_k == 0) and sets V=V_k and Qk=Q^k. */
-static int
-gmp_lucas_mod (mpz_t V, mpz_t Qk, long Q,
-	       mp_bitcnt_t b0, const mpz_t n)
+int gmp_lucas_mod (mpz_t V, mpz_t Qk, long Q,
+  	           mp_bitcnt_t b0, const mpz_t n)
 {
   mp_bitcnt_t bs;
   mpz_t U;

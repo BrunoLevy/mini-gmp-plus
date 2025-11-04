@@ -31,6 +31,8 @@ the GNU MP Library test suite.  If not, see https://www.gnu.org/licenses/.  */
 #include "../mini-gmp.h"
 #include "../mini-mpq.h"
 
+#include <string.h> /* Bruno */
+
 static size_t total_alloc = 0;
 
 /* Custom memory allocation to track memory usage, and add a small red
