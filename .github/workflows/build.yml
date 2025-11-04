@@ -26,18 +26,20 @@ jobs:
             name: Windows
     steps:
 
-      - name: pkgconf (macOS)
+      - name: Prerequisites (macOS)
         if: runner.os == 'macOS'
         run: |
            brew install pkgconf
 
-      - name: GMP (Windows)
+      - name: Prerequisites (Windows)
         if: runner.os == 'Windows'
         run: |
            git clone https://github.com/Microsoft/vcpkg --depth=1
            cd vcpkg; cmd /c bootstrap-vcpkg.bat
            vcpkg install pkgconf
-           vcpkg install --triplet=x64-windows-static gmp
+           dir
+           dir bin
+           vcpkg install gmp
 
       - name: Checkout repository
         uses: actions/checkout@v4

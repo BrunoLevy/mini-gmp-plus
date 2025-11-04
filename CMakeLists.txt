@@ -1,3 +1,15 @@
+# A CMakeFile for mini-gmp
+# Bruno Levy, November 2025
+#
+# To compile:
+#   cmake -Bbuild -DMINI_GMP_PLUS_WITH_TESTS=1
+#   cmake --build build
+#
+# To compile and run tests: (needs gmp, see comments in tests/CMakeLists.txt)
+#   cmake -Bbuild -DMINI_GMP_PLUS_WITH_TESTS=1
+#   cmake --build build
+#   cd build/tests; ctest
+
 cmake_minimum_required(VERSION 3.5...3.30)
 project(mini-gmp-plus)
 
