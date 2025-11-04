@@ -4,6 +4,11 @@
 include(CTest)
 enable_testing()
 
+if(WIN32)
+   set(PKG_CONFIG_EXECUTABLE "D:\a\mini-gmp-plus\mini-gmp-plus\vcpkg\installed\x64-windows\share\pkgconf")
+endif()
+
+
 # for PkgConfig and gmp to work (see .github/Workflows/build.yml)
 # under MacOS: brew install pkgconf
 # under Windows:
