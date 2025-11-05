@@ -13,7 +13,7 @@ if(WIN32)
 #      ${VCPKG_ROOT}/installed/x64-windows/tools/pkgconf/pkgconf.exe
 #   )
     set(ENV{PKG_CONFIG_PATH} $ENV{VCPKG_ROOT}/installed/x64-windows/lib/pkgconfig)
-    SET(PKG_CONFIG_EXECUTABLE pkgconf.exe)
+#   SET(PKG_CONFIG_EXECUTABLE pkgconf.exe)
 endif()
 
 # for PkgConfig and gmp to work (see .github/Workflows/build.yml)
