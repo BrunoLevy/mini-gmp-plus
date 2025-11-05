@@ -127,7 +127,7 @@ see https://www.gnu.org/licenses/.  */
 #elif defined(_MSC_VER)
 #define gmp_umul_ppmm(w1, w0, u, v) w0 = _umul128(u,v,&w1)
 #else
-#error Unsupported Compiler
+#warning Using slow gmp_umul_ppmm()
 #define gmp_umul_ppmm(w1, w0, u, v)					\
   do {									\
     int LOCAL_GMP_LIMB_BITS = GMP_LIMB_BITS;				\

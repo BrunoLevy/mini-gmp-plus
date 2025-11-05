@@ -27,7 +27,7 @@
 #endif
 
 
-#if defined(XXX__GNUC__)
+#if defined(__GNUC__)
 
 /******************* GCC/CLANG **********************/
 
@@ -162,9 +162,9 @@ BITOPS64_INLINE uint64_t bitops64_lshift128(
 }
 
 #else
-// Generic implementations here kept for reference
 
-// #error Compiler is unsupported
+/* Generic implementations here kept for reference */
+#warning Using slow bitops64 (clz, ctz, lshift)
 
 /**
  * \brief Counts the number of leading zeroes in a 64 bits integer
