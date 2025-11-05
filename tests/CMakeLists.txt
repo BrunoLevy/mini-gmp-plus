@@ -4,19 +4,19 @@
 include(CTest)
 enable_testing()
 
-# Need to indicate CMake where pkgconf is...
-# ... and need to indicate pkgconf where its config dir is.
-#if(WIN32)
-#    set(ENV{PKG_CONFIG_PATH} $ENV{VCPKG_ROOT}/installed/x64-windows/lib/pkgconfig)
-#endif()
+# GMP is needed by the test programs (that do the same computations
+#  with gmp and mini-gmp-plus and compare the results)
+# GMP is found by pkgconfig (works under Linux, Mac, and Windows)
+# Under windows, GMP is installed by vcpkg,
+#  For this to work under Windows, one needs to:
+#   - add VCPKG_ROOT/installed/x64-windows/tools/pkgconf to the path
+#   - set PKG_CONFIG_PATH to VCPKG_ROOT/installed/x64-windows/lib/pkgconfig
+#  In addition, for the test programs to find their DLLs, one needs to add to the path:
+#   - VCPKG_ROOT/installed/x64-windows/bin  (where vcpkg installs the DLLs)
+#   - the directory where libmini-gmp-plus.dll will be generated
+#        that is, ${{ github.workspace }}/build/${{ matrix.config }}
+#  see the build.yml github action, 'Set paths' step
 
-# for PkgConfig and gmp to work (see .github/Workflows/build.yml)
-# under MacOS: brew install pkgconf
-# under Windows:
-#    git clone https://github.com/Microsoft/vcpkg --depth=1
-#    cd vcpkg; cmd /c bootstrap-vcpkg.bat
-#    vcpkg install pkgconf
-#    vcpkg install gmp
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(gmp REQUIRED IMPORTED_TARGET gmp)
 include_directories(${gmp_INCLUDE_DIRS})
