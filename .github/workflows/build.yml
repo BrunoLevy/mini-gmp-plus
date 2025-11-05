@@ -68,6 +68,11 @@ jobs:
       - name: Build
         run: cmake --build build --config ${{ matrix.config }}
 
+      - name: Display built (Windows)
+        if: runner.os == 'Windows'
+        run: |
+           tree /f
+
       - name: Test
         run: |
             echo $PATH
