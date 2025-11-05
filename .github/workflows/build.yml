@@ -31,15 +31,12 @@ jobs:
 
       - name: Path (Windows)
         if: runner.os == 'Windows'
-#        shell: bash
         run: |
-           echo "${{ github.workspace }}" >> "$env:GITHUB_PATH"
-           echo "${{ github.workspace }}/../vcpkg/installed/x64-windows/bin"
-           echo "${{ github.workspace }}/../vcpkg/installed/x64-windows/bin" >> "$env:GITHUB_PATH"
+           echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\bin"
+           echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
 
       - name: TestPath (Windows)
         if: runner.os == 'Windows'
-#        shell: bash
         run: |
            echo "$env:PATH"
            echo "$env:VCPKG_ROOT"
