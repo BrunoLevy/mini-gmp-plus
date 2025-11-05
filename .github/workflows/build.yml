@@ -28,7 +28,7 @@ jobs:
 
       - name: Path (Windows)
         if: runner.os == 'Windows'
-        shell: bash
+#        shell: bash
         run: |
            echo "${{ github.workspace }}/../vcpkg/installed/x64-windows/bin"
            echo "${{ github.workspace }}/../vcpkg/installed/x64-windows/bin" >> "$GITHUB_PATH"
@@ -36,7 +36,7 @@ jobs:
 
       - name: TestPath (Windows)
         if: runner.os == 'Windows'
-        shell: bash
+#        shell: bash
         run: |
            echo "$PATH"
            tagada
