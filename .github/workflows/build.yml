@@ -27,18 +27,25 @@ jobs:
 
     steps:
 
-      - name: Set VCPKG_ROOT (Windows)
-        if: runner.os == 'Windows'
+      - name: Set VCPKG_ROOT and VCPKG_PATH (Windows Release)
+        if: ${{ (runner.os == 'Windows') && (runner.config == 'Release') }}
         run: |
            echo "VCPKG_ROOT=${{ github.workspace }}\..\vcpkg" >> "$env:GITHUB_ENV"
+           echo "VCPKG_PATH=${{ github.workspace }}\..\vcpkg\installed\x64-windows" >> "$env:GITHUB_ENV"
+
+      - name: Set VCPKG_ROOT and VCPKG_PATH (Windows Debug)
+        if: ${{ (runner.os == 'Windows') && (runner.config == 'Debug') }}
+        run: |
+           echo "VCPKG_ROOT=${{ github.workspace }}\..\vcpkg" >> "$env:GITHUB_ENV"
+           echo "VCPKG_PATH=${{ github.workspace }}\..\vcpkg\installed\x64-windows\debug" >> "$env:GITHUB_ENV"
 
       - name: Set paths (Windows)
         if: runner.os == 'Windows'
         run: |
            echo "$env:VCPKG_ROOT\installed\x64-windows\tools\pkgconf" >> "$env:GITHUB_PATH"
-           echo "$env:VCPKG_ROOT\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
            echo "${{ github.workspace }}\build\${{ matrix.config }}" >> "$env:GITHUB_PATH"
-           echo "PKG_CONFIG_PATH=$env:VCPKG_ROOT\installed\x64-windows\lib\pkgconfig" >> "$env:GITHUB_ENV"
+           echo "$env:VCPKG_PATH\bin" >> "$env:GITHUB_PATH"
+           echo "PKG_CONFIG_PATH=$env:VCPKG_PATH\lib\pkgconfig" >> "$env:GITHUB_ENV"
 
       - name: Check paths (Windows)
         if: runner.os == 'Windows'
