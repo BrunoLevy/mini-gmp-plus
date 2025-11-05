@@ -28,13 +28,13 @@ jobs:
     steps:
 
       - name: Set VCPKG_ROOT and VCPKG_PATH (Windows Release)
-        if: ${{ (runner.os == 'Windows') && (runner.config == 'Release') }}
+        if: ${{ (runner.os == 'Windows') && (matrix.config == 'Release') }}
         run: |
            echo "VCPKG_ROOT=${{ github.workspace }}\..\vcpkg" >> "$env:GITHUB_ENV"
            echo "VCPKG_PATH=${{ github.workspace }}\..\vcpkg\installed\x64-windows" >> "$env:GITHUB_ENV"
 
       - name: Set VCPKG_ROOT and VCPKG_PATH (Windows Debug)
-        if: ${{ (runner.os == 'Windows') && (runner.config == 'Debug') }}
+        if: ${{ (runner.os == 'Windows') && (matrix.config == 'Debug') }}
         run: |
            echo "VCPKG_ROOT=${{ github.workspace }}\..\vcpkg" >> "$env:GITHUB_ENV"
            echo "VCPKG_PATH=${{ github.workspace }}\..\vcpkg\installed\x64-windows\debug" >> "$env:GITHUB_ENV"
