@@ -6,9 +6,9 @@ enable_testing()
 
 # Need to indicate CMake where pkgconf is...
 # ... and need to indicate pkgconf where its config dir is.
-if(WIN32)
-    set(ENV{PKG_CONFIG_PATH} $ENV{VCPKG_ROOT}/installed/x64-windows/lib/pkgconfig)
-endif()
+#if(WIN32)
+#    set(ENV{PKG_CONFIG_PATH} $ENV{VCPKG_ROOT}/installed/x64-windows/lib/pkgconfig)
+#endif()
 
 # for PkgConfig and gmp to work (see .github/Workflows/build.yml)
 # under MacOS: brew install pkgconf

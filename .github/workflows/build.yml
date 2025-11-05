@@ -32,19 +32,20 @@ jobs:
         run: |
            echo "VCPKG_ROOT=${{ github.workspace }}\..\vcpkg" >> "$env:GITHUB_ENV"
 
-      - name: Path (Windows)
+      - name: Set paths (Windows)
         if: runner.os == 'Windows'
         run: |
-           echo "VCPKG_ROOT=$env:VCPKG_ROOT"
            echo "$env:VCPKG_ROOT\installed\x64-windows\tools\pkgconf" >> "$env:GITHUB_PATH"
            echo "$env:VCPKG_ROOT\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
            echo "${{ github.workspace }}\build\${{ matrix.config }}" >> "$env:GITHUB_PATH"
+           echo "PKG_CONFIG_PATH=$env:VCPKG_ROOT\installed\x64-windows\lib\pkgconfig" >> "$env:GITHUB_ENV"
 
-      - name: TestPath (Windows)
+      - name: Check paths (Windows)
         if: runner.os == 'Windows'
         run: |
            echo "PATH=$env:PATH"
            echo "VCPKG_ROOT=$env:VCPKG_ROOT"
+           echo "PKG_CONFIG_PATH=$env:PKG_CONFIG_PATH"
 
       - name: Prerequisites (Windows)
         if: runner.os == 'Windows'
