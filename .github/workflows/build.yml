@@ -24,6 +24,9 @@ jobs:
             name: Linux
           - os: windows-2022
             name: Windows
+    env:
+        VCPKG_ROOT: "${{ github.workspace }}/../vcpkg"
+
     steps:
 
       - name: Path (Windows)
@@ -38,8 +41,8 @@ jobs:
         if: runner.os == 'Windows'
 #        shell: bash
         run: |
-           echo "$PATH"
-           echo "%PATH%"
+           echo "$env:PATH"
+           echo "$env:VCPKG_ROOT"
            tagada
 
       - name: Prerequisites (macOS)
