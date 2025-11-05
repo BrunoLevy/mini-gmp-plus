@@ -100,30 +100,6 @@ see https://www.gnu.org/licenses/.  */
 #define gmp_clz(count, x) count = bitops64_clz(x)
 #define gmp_ctz(count, x) count = bitops64_ctz(x)
 
-#if 0 /* [Bruno] kept generic version here */
-#define gmp_clz(count, x) do {						\
-    mp_limb_t __clz_x = (x);						\
-    unsigned __clz_c = 0;						\
-    int LOCAL_SHIFT_BITS = 8;						\
-    if (GMP_LIMB_BITS > LOCAL_SHIFT_BITS)				\
-      for (;								\
-	   (__clz_x & ((mp_limb_t) 0xff << (GMP_LIMB_BITS - 8))) == 0;	\
-	   __clz_c += 8)						\
-	{ __clz_x <<= LOCAL_SHIFT_BITS;	}				\
-    for (; (__clz_x & GMP_LIMB_HIGHBIT) == 0; __clz_c++)		\
-      __clz_x <<= 1;							\
-    (count) = __clz_c;							\
-  } while (0)
-
-#define gmp_ctz(count, x) do {						\
-    mp_limb_t __ctz_x = (x);						\
-    unsigned __ctz_c = 0;						\
-    gmp_clz (__ctz_c, __ctz_x & - __ctz_x);				\
-    (count) = GMP_LIMB_BITS - 1 - __ctz_c;				\
-  } while (0)
-
-#endif
-
 #define gmp_add_ssaaaa(sh, sl, ah, al, bh, bl) \
   do {									\
     mp_limb_t __x;							\
@@ -141,17 +117,17 @@ see https://www.gnu.org/licenses/.  */
   } while (0)
 
 /* [Bruno] using 64x64->128 bits multiplication */
-#if defined(XXX__GNUC__)
+#if defined(__GNUC__)
 #define gmp_umul_ppmm(w1, w0, u, v)                                             \
     do {                                                                        \
 	bitops64_uint128_t __ww=(bitops64_uint128_t)(u)*(bitops64_uint128_t)(v);\
        w0 = (mp_limb_t) __ww;                                                   \
        w1 = (mp_limb_t) (__ww >> 64);                                           \
     } while(0)
-#elif defined(XXX_MSC_VER)
+#elif defined(_MSC_VER)
 #define gmp_umul_ppmm(w1, w0, u, v) w0 = _umul128(u,v,&w1)
 #else
-/* #error Unsupported Compiler */
+#error Unsupported Compiler
 #define gmp_umul_ppmm(w1, w0, u, v)					\
   do {									\
     int LOCAL_GMP_LIMB_BITS = GMP_LIMB_BITS;				\
