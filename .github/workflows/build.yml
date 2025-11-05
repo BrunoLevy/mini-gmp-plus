@@ -32,20 +32,15 @@ jobs:
       - name: Path (Windows)
         if: runner.os == 'Windows'
         run: |
-           echo "$env:GITHUB_PATH"
-           echo "$env:GITHUB_ENV"
-           echo "trululu" >> $env:GITHUB_ENV
-#           echo "$env:VCPKG_ROOT\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
-#           echo "$env:VCPKG_ROOT\installed\x64-windows\tools\pkgconf >> "$env:GITHUB_PATH"
-#           echo "${{ github.workspace }}\build\${{ matrix.config }}" >> "$env:GITHUB_PATH"
+           echo "$env:VCPKG_ROOT\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
+           echo "$env:VCPKG_ROOT\installed\x64-windows\tools\pkgconf >> "$env:GITHUB_PATH"
+           echo "${{ github.workspace }}\build\${{ matrix.config }}" >> "$env:GITHUB_PATH"
 
       - name: TestPath (Windows)
         if: runner.os == 'Windows'
         run: |
            echo "$env:PATH"
            echo "$env:VCPKG_ROOT"
-           echo "$env:PKG_CONFIG_PATH"
-           tagada
 
       - name: Prerequisites (macOS)
         if: runner.os == 'macOS'
