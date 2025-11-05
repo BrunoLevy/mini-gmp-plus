@@ -32,7 +32,8 @@ jobs:
       - name: Path (Windows)
         if: runner.os == 'Windows'
         run: |
-           $env:VCKPG_ROOT = "${{ github.workspace }}\\..\\vcpkg"
+           $env:VCKPG_ROOT = "${{ github.workspace }}\..\vcpkg"
+           echo "$env:VCPKG_ROOT"
            echo "VCPKG_ROOT=$env:VCPKG_ROOT" >> "$env:GITHUB_ENV"
            echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\tools\pkgconf" >> "$env:GITHUB_PATH"
            echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
