@@ -40,7 +40,6 @@ jobs:
         run: |
            echo "$env:PATH"
            echo "$env:VCPKG_ROOT"
-           tagada
 
       - name: Prerequisites (macOS)
         if: runner.os == 'macOS'
