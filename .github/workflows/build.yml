@@ -41,6 +41,7 @@ jobs:
         run: |
            echo "$env:PATH"
            echo "$env:VCPKG_ROOT"
+           echo "$env:VCPKG_ROOT\jaime\les\fraises\tagada"
 
       - name: Prerequisites (Windows)
         if: runner.os == 'Windows'
