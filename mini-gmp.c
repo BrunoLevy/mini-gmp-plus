@@ -141,17 +141,17 @@ see https://www.gnu.org/licenses/.  */
   } while (0)
 
 /* [Bruno] using 64x64->128 bits multiplication */
-#if defined(__GNUC__)
+#if defined(XXX__GNUC__)
 #define gmp_umul_ppmm(w1, w0, u, v)                                             \
     do {                                                                        \
 	bitops64_uint128_t __ww=(bitops64_uint128_t)(u)*(bitops64_uint128_t)(v);\
        w0 = (mp_limb_t) __ww;                                                   \
        w1 = (mp_limb_t) (__ww >> 64);                                           \
     } while(0)
-#elif defined(_MSC_VER)
+#elif defined(XXX_MSC_VER)
 #define gmp_umul_ppmm(w1, w0, u, v) w0 = _umul128(u,v,&w1)
 #else
-#error Unsupported Compiler
+/* #error Unsupported Compiler */
 #define gmp_umul_ppmm(w1, w0, u, v)					\
   do {									\
     int LOCAL_GMP_LIMB_BITS = GMP_LIMB_BITS;				\

@@ -11,7 +11,8 @@ enable_testing()
 #  For this to work under Windows, one needs to:
 #   - add VCPKG_ROOT/installed/x64-windows/tools/pkgconf to the path
 #   - set PKG_CONFIG_PATH to VCPKG_ROOT/installed/x64-windows/lib/pkgconfig
-#  In addition, for the test programs to find their DLLs, one needs to add to the path:
+#  In addition, for the test programs to find their DLLs,
+#  one needs to add to the path:
 #   - VCPKG_ROOT/installed/x64-windows/bin  (where vcpkg installs the DLLs)
 #   - the directory where libmini-gmp-plus.dll will be generated
 #        that is, ${{ github.workspace }}/build/${{ matrix.config }}
@@ -42,4 +43,5 @@ foreach(T ${MINI_GMP_TESTS})
       target_link_libraries(${T} m)
    endif()
    add_test(NAME ${T} COMMAND ${T})
+   set_tests_properties(${T} PROPERTIES TIMEOUT 30)
 endforeach()
