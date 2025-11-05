@@ -39,6 +39,7 @@ jobs:
 #        shell: bash
         run: |
            echo "$PATH"
+           echo "%PATH%"
            tagada
 
       - name: Prerequisites (macOS)
