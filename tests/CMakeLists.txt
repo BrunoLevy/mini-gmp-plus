@@ -10,10 +10,11 @@ enable_testing()
 # Under windows, GMP is installed by vcpkg,
 #  For this to work under Windows, one needs to:
 #   - add VCPKG_ROOT/installed/x64-windows/tools/pkgconf to the path
-#   - set PKG_CONFIG_PATH to VCPKG_ROOT/installed/x64-windows/lib/pkgconfig
+#   - set PKG_CONFIG_PATH to VCPKG_ROOT/installed/x64-windows/<conf>/lib/pkgconfig
+#  where <conf> is debug for debug (as you may have guessed) and nothing for release
 #  In addition, for the test programs to find their DLLs,
 #  one needs to add to the path:
-#   - VCPKG_ROOT/installed/x64-windows/bin  (where vcpkg installs the DLLs)
+#   - VCPKG_ROOT/installed/x64-windows/<conf>/bin  (where vcpkg installs the DLLs)
 #   - the directory where libmini-gmp-plus.dll will be generated
 #        that is, ${{ github.workspace }}/build/${{ matrix.config }}
 #  see the build.yml github action, 'Set paths' step

@@ -52,6 +52,7 @@ jobs:
         run: |
            echo "PATH=$env:PATH"
            echo "VCPKG_ROOT=$env:VCPKG_ROOT"
+           echo "VCPKG_PATH=$env:VCPKG_PATH"
            echo "PKG_CONFIG_PATH=$env:PKG_CONFIG_PATH"
 
       - name: Prerequisites (Windows)
