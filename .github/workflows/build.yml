@@ -32,8 +32,8 @@ jobs:
       - name: Path (Windows)
         if: runner.os == 'Windows'
         run: |
-           echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
            echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\tools\pkgconf" >> "$env:GITHUB_PATH"
+           echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
            echo "${{ github.workspace }}\build\${{ matrix.config }}" >> "$env:GITHUB_PATH"
 
       - name: TestPath (Windows)
@@ -41,11 +41,6 @@ jobs:
         run: |
            echo "$env:PATH"
            echo "$env:VCPKG_ROOT"
-
-#      - name: Prerequisites (macOS)
-#        if: runner.os == 'macOS'
-#        run: |
-#           brew install pkgconf
 
       - name: Prerequisites (Windows)
         if: runner.os == 'Windows'

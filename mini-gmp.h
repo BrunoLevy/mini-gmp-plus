@@ -89,7 +89,7 @@ typedef mp_limb_t *mp_ptr;
 typedef const mp_limb_t *mp_srcptr;
 
 /* [Bruno] local buffer for storing small mpzs without dynamic allocation */
-#define MP_BUFF_SIZE 5
+/* #define MP_BUFF_SIZE 5 */
 #ifdef MP_BUFF_SIZE
     #define MP_BUFF
 #endif
