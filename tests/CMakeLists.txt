@@ -7,12 +7,13 @@ enable_testing()
 # Need to indicate CMake where pkgconf is...
 # ... and need to indicate pkgconf where its config dir is.
 if(WIN32)
-   set(VCPKG_ROOT ${CMAKE_SOURCE_DIR}/../vcpkg)
-   set(
-      PKG_CONFIG_EXECUTABLE
-      ${VCPKG_ROOT}/installed/x64-windows/tools/pkgconf/pkgconf.exe
-   )
-   set(ENV{PKG_CONFIG_PATH} ${VCPKG_ROOT}/installed/x64-windows/lib/pkgconfig)
+#   set(VCPKG_ROOT ${CMAKE_SOURCE_DIR}/../vcpkg)
+#   set(
+#      PKG_CONFIG_EXECUTABLE
+#      ${VCPKG_ROOT}/installed/x64-windows/tools/pkgconf/pkgconf.exe
+#   )
+#   set(ENV{PKG_CONFIG_PATH} ${VCPKG_ROOT}/installed/x64-windows/lib/pkgconfig)
+    SET(PKG_CONFIG_EXECUTABLE pkgconf.exe)
 endif()
 
 # for PkgConfig and gmp to work (see .github/Workflows/build.yml)
