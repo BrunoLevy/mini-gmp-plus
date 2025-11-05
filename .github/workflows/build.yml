@@ -24,14 +24,16 @@ jobs:
             name: Linux
           - os: windows-2022
             name: Windows
-    env:
-        VCPKG_ROOT: "${{ github.workspace }}\\..\\vcpkg"
+#    env:
+#        VCPKG_ROOT: "${{ github.workspace }}\\..\\vcpkg"
 
     steps:
 
       - name: Path (Windows)
         if: runner.os == 'Windows'
         run: |
+           $env:VCKPG_ROOT = "${{ github.workspace }}\\..\\vcpkg"
+           echo "VCPKG_ROOT=$env:VCPKG_ROOT" >> "$env:GITHUB_ENV"
            echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\tools\pkgconf" >> "$env:GITHUB_PATH"
            echo "${{ github.workspace }}\..\vcpkg\installed\x64-windows\bin" >> "$env:GITHUB_PATH"
            echo "${{ github.workspace }}\build\${{ matrix.config }}" >> "$env:GITHUB_PATH"
