@@ -23,7 +23,7 @@ numbers and obtaining the 128-bits result, or adding 64-bit numbers and
 propagating the carry in multi-limb operations. While 64-bit add/subtract with
 carry propagation is recognized and optimized by modern compilers, it is not the
 case for the other operations, that are implemented by some compiler-dependent
-intrinsics. For this reason, I needed to create a new [bitops64.h](bitopts64.h)
+intrinsics. For this reason, I needed to create a new [bitops64.h](bitops64.h)
 file to abstract them. These two modifications (_local storage_ and
 _64 bits intrinsics_) introduced a couple of very simple yet not completely
 trivial changes (I must confess I did not have them right the first time), so it
