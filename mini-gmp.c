@@ -1447,7 +1447,7 @@ mpn_set_str (mp_ptr rp, const unsigned char *sp, size_t sn, int base)
 /* MPZ interface */
 
 /*
- * [Bruno Levy 2025/10/19]
+ * [Bruno Levy 10/19/2025]
  * local buffer for storing small mpzs without dynamic allocation
  * changes mpz_init(), mpz_init2(), mpz_clear(), mpz_realloc(), and
  * also mpz_swap() further away in this file

@@ -1,9 +1,24 @@
 /*
- * Bruno Levy October 2025
  * Some wrappers for bit operations on 64-bits integers, for different compilers
- *   GCC
- *   CLANG
- *   Visual C++
+ *  - GCC
+ *  - CLANG
+ *  - Visual C++
+ * Copyright 2025 Bruno Levy.
+ *
+ * This file is part of the mini-gmp-plus library.
+ * The mini-gmp-plus library is free software; you can redistribute
+ * it and/or modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * The GNU MP Library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * for more details.
+ *
+ * You should have received copies of the GNU Lesser General Public License
+ * along with the mini-gmp-plus Library.
+ * If not, see https://www.gnu.org/licenses/.
  */
 
 #ifndef BITOPS64

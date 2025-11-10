@@ -89,7 +89,9 @@ typedef mp_limb_t *mp_ptr;
 typedef const mp_limb_t *mp_srcptr;
 
 /* [Bruno Levy] 10/19/2025 local buff for storing small mpzs without alloc */
+#if !defined(MINI_GMP_PLUS_NO_BUFF) && !defined(MINI_GMP_PLUS_BUFF_SIZE)
 #define MINI_GMP_PLUS_BUFF_SIZE 5
+#endif
 
 typedef struct
 {
