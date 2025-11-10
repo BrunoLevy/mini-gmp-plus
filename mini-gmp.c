@@ -50,7 +50,8 @@ see https://www.gnu.org/licenses/.  */
 #include <string.h>
 
 #include "mini-gmp.h"
-#include "bitops64.h" /* Bruno */
+#include "bitops64.h" /* [Bruno Levy] 11/04/2025 intrinsics
+			 for faster 64 bits operations (Linux/MacOS/Windows) */
 
 #if !defined(MINI_GMP_DONT_USE_FLOAT_H)
 #include <float.h>
@@ -96,7 +97,7 @@ see https://www.gnu.org/licenses/.  */
   } while (0)
 
 
-/* [Bruno] use fast versions in bitops64.h */
+/* [Bruno Levy] 11/04/2025 use fast versions in bitops64.h */
 #define gmp_clz(count, x) count = bitops64_clz(x)
 #define gmp_ctz(count, x) count = bitops64_ctz(x)
 
@@ -116,7 +117,7 @@ see https://www.gnu.org/licenses/.  */
     (sl) = __x;								\
   } while (0)
 
-/* [Bruno] using 64x64->128 bits multiplication */
+/* [Bruno Levy] 11/04/2025 using 64x64->128 bits multiplication */
 #if defined(__GNUC__)
 #define gmp_umul_ppmm(w1, w0, u, v)                                             \
     do {                                                                        \
@@ -1446,16 +1447,17 @@ mpn_set_str (mp_ptr rp, const unsigned char *sp, size_t sn, int base)
 /* MPZ interface */
 
 /*
- * [Bruno] local buffer for storing small mpzs without dynamic allocation
+ * [Bruno Levy 2025/10/19]
+ * local buffer for storing small mpzs without dynamic allocation
  * changes mpz_init(), mpz_init2(), mpz_clear(), mpz_realloc(), and
  * also mpz_swap() further away in this file
  */
-#ifdef MP_BUFF
+#ifdef MINI_GMP_PLUS_BUFF_SIZE
 
 void
 mpz_init (mpz_t r)
 {
-  r->_mp_alloc = MP_BUFF_SIZE;
+  r->_mp_alloc = MINI_GMP_PLUS_BUFF_SIZE;
   r->_mp_size = 0;
   r->_mp_d = r->_mp_buff;
 }
@@ -1470,15 +1472,15 @@ mpz_init2 (mpz_t r, mp_bitcnt_t bits)
   bits -= (bits != 0);		/* Round down, except if 0 */
   rn = 1 + bits / GMP_LIMB_BITS;
 
-  r->_mp_alloc = (rn <= MP_BUFF_SIZE) ? MP_BUFF_SIZE : rn;
+  r->_mp_alloc = (rn <= MINI_GMP_PLUS_BUFF_SIZE) ? MINI_GMP_PLUS_BUFF_SIZE : rn;
   r->_mp_size = 0;
-  r->_mp_d = (rn > MP_BUFF_SIZE) ? gmp_alloc_limbs (rn) : r->_mp_buff;
+  r->_mp_d = (rn > MINI_GMP_PLUS_BUFF_SIZE) ? gmp_alloc_limbs (rn) : r->_mp_buff;
 }
 
 void
 mpz_clear (mpz_t r)
 {
-    if (r->_mp_alloc > MP_BUFF_SIZE && r->_mp_d != r->_mp_buff)
+    if (r->_mp_alloc > MINI_GMP_PLUS_BUFF_SIZE && r->_mp_d != r->_mp_buff)
 	gmp_free_limbs (r->_mp_d, r->_mp_alloc);
     r->_mp_size = 0;
     r->_mp_alloc = 0;
@@ -1488,10 +1490,10 @@ mpz_clear (mpz_t r)
 static mp_ptr
 mpz_realloc (mpz_t r, mp_size_t size_in)
 {
-  mp_size_t size = GMP_MAX (size_in, MP_BUFF_SIZE);
+  mp_size_t size = GMP_MAX (size_in, MINI_GMP_PLUS_BUFF_SIZE);
   mp_size_t rn = GMP_ABS(r->_mp_size);
   if(r->_mp_d == r->_mp_buff) {
-      if(size > MP_BUFF_SIZE) {
+      if(size > MINI_GMP_PLUS_BUFF_SIZE) {
 	  r->_mp_d = gmp_alloc_limbs (size);
 	  if (rn <= size_in) {
 	      memcpy(r->_mp_d, r->_mp_buff, sizeof(mp_limb_t)*(size_t)rn);
@@ -2027,12 +2029,13 @@ mpz_neg (mpz_t r, const mpz_t u)
 }
 
 /*
- * [Bruno] local buffer for storing small mpzs without dynamic allocation
+ * [Bruno Levy] 10/19/2025
+ * local buffer for storing small mpzs without dynamic allocation
  * changes mpz_swap()
  * (and also mpz_init(), mpz_init2(), mpz_clear(), mpz_realloc() at the
  * beginning of this file)
  */
-#ifdef MP_BUFF
+#ifdef MINI_GMP_PLUS_BUFF_SIZE
 void
 mpz_swap (mpz_t u, mpz_t v)
 {
@@ -2040,8 +2043,8 @@ mpz_swap (mpz_t u, mpz_t v)
   mp_size_t vn = GMP_ABS(v->_mp_size);
   MP_SIZE_T_SWAP (u->_mp_alloc, v->_mp_alloc);
   MPN_PTR_SWAP (u->_mp_d, u->_mp_size, v->_mp_d, v->_mp_size);
-  if(un <= MP_BUFF_SIZE || vn <= MP_BUFF_SIZE) {
-      mp_size_t n = GMP_MIN(GMP_MAX(un,vn),MP_BUFF_SIZE);
+  if(un <= MINI_GMP_PLUS_BUFF_SIZE || vn <= MINI_GMP_PLUS_BUFF_SIZE) {
+      mp_size_t n = GMP_MIN(GMP_MAX(un,vn),MINI_GMP_PLUS_BUFF_SIZE);
       for(int i=0; i<n; ++i) {
 	  MP_LIMB_T_SWAP(u->_mp_buff[i], v->_mp_buff[i]);
       }
@@ -2202,11 +2205,12 @@ mpz_mul (mpz_t r, const mpz_t u, const mpz_t v)
     }
 
   /*
-   * [Bruno] with local buff, mpz_swap costs a bit, so only use a temporary when
+   * [Bruno Levy] 10/19/2025
+   * with local buff, mpz_swap costs a bit, so only use a temporary when
    * needed (that is when target is one of the operands).
    * A temporary is needed whenever operands and result overlap.
    */
-#ifdef MP_BUFF
+#ifdef MINI_GMP_PLUS_BUFF_SIZE
   int needs_temp = (
       GMP_MPN_OVERLAP_P(r->_mp_d, r->_mp_alloc, u->_mp_d, u->_mp_alloc) ||
       GMP_MPN_OVERLAP_P(r->_mp_d, r->_mp_alloc, v->_mp_d, v->_mp_alloc)
@@ -3566,7 +3570,8 @@ gmp_lucas_step_k_2k (mpz_t V, mpz_t Qk, const mpz_t n)
   mpz_mul (Qk, Qk, Qk);
 }
 
-/* [Bruno] Made this function public (used by tests) */
+/* [Bruno Levy] 11/04/2025 Made this function public (used by tests) */
+
 /* Computes V_k, Q^k (mod n) for the Lucas' sequence */
 /* with P=1, Q=Q; k = (n>>b0)|1. */
 /* Requires an odd n > 4; b0 > 0; -2*Q must not overflow a long */

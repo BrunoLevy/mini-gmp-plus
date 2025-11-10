@@ -41,10 +41,10 @@ see https://www.gnu.org/licenses/.  */
 /* For size_t */
 #include <stddef.h>
 
-/* [Bruno] for uint64_t */
+/* [Bruno Levy] 10/19/2025 for uint64_t */
 #include <stdint.h>
 
-/* [Bruno] import / export linkage specs */
+/* [Bruno Levy] 10/19/2025 import / export linkage specs */
 
 #if defined(_MSC_VER)
 #  define MINI_GMP_PLUS_IMPORT __declspec(dllimport)
@@ -79,7 +79,7 @@ MINI_GMP_PLUS_API void mp_get_memory_functions (void *(**) (size_t),
 	 		      void *(**) (void *, size_t, size_t),
 			      void (**) (void *, size_t));
 
-/* [Bruno] using types from <stdint.h> is safer/clearer */
+/* [Bruno Levy] 10/19/2025 mp_limb_t fixed as a uint64 (from <stdint.h>) */
 typedef uint64_t mp_limb_t;
 
 typedef long mp_size_t;
@@ -88,11 +88,8 @@ typedef unsigned long mp_bitcnt_t;
 typedef mp_limb_t *mp_ptr;
 typedef const mp_limb_t *mp_srcptr;
 
-/* [Bruno] local buffer for storing small mpzs without dynamic allocation */
-#define MP_BUFF_SIZE 5
-#ifdef MP_BUFF_SIZE
-    #define MP_BUFF
-#endif
+/* [Bruno Levy] 10/19/2025 local buff for storing small mpzs without alloc */
+#define MINI_GMP_PLUS_BUFF_SIZE 5
 
 typedef struct
 {
@@ -102,8 +99,10 @@ typedef struct
 				   last field points to.  If _mp_size is
 				   negative this is a negative number.  */
   mp_limb_t *_mp_d;		/* Pointer to the limbs.  */
-#ifdef MP_BUFF
-  mp_limb_t _mp_buff[MP_BUFF_SIZE]; /* [Bruno] Local array for small numbers */
+#ifdef MINI_GMP_PLUS_BUFF_SIZE
+  mp_limb_t _mp_buff[MINI_GMP_PLUS_BUFF_SIZE]; /* [Bruno Levy] 10/19/2025
+						  Local array for
+						  small numbers */
 #endif
 } __mpz_struct;
 
@@ -337,7 +336,7 @@ MINI_GMP_PLUS_API size_t mpz_out_str (FILE *, int, const mpz_t);
 MINI_GMP_PLUS_API void mpz_import (mpz_t, size_t, int, size_t, int, size_t, const void *);
 MINI_GMP_PLUS_API void *mpz_export (void *, size_t *, int, size_t, int, size_t, const mpz_t);
 
-/* [Bruno] made this function public (used in the tests) */
+/* [Bruno Levy] 11/04/2025 Made this function public (used by tests) */
 MINI_GMP_PLUS_API int gmp_lucas_mod (mpz_t V, mpz_t Qk, long Q, mp_bitcnt_t b0, const mpz_t n);
 
 

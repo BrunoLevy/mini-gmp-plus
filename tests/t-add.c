@@ -22,7 +22,7 @@ the GNU MP Library test suite.  If not, see https://www.gnu.org/licenses/.  */
 
 #include "testutils.h"
 
-#define MAXBITS 321 /* [Bruno] 400 */ 
+#define MAXBITS 321 /* [Bruno Levy] 11/06/2025 321=5*64+1 tests local storage*/
 #define COUNT 10000
 
 void

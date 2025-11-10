@@ -35,6 +35,8 @@ see https://www.gnu.org/licenses/.  */
 
 #include "mini-gmp.h"
 
+/* [Bruno Levy] 19/10/2025 MINI_GMP_PLUS decl for all functions */
+
 #if defined (__cplusplus)
 extern "C" {
 #endif
