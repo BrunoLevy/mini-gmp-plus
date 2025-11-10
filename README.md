@@ -6,7 +6,8 @@ with some patches/optimizations for usage in numerical geometry
 and easy-to-use CMakeList (tested under Windows, Linux, Mac).
 
 My changes are listed in [mini-gmp-plus-Changelog](mini-gmp-plus-Changelog),
-and indicated by [Bruno Levy] tags in the sources.
+and indicated by `[Bruno Levy]` tags in the sources, with the date and reason
+for the modification.
 
 Design rationale
 ----------------
@@ -34,7 +35,7 @@ and Windows.
 Features and specificities
 --------------------------
 As compared to `mini-gmp`, `mini-gmp-plus` has the following differences:
-- _limitation_: limb size is fixed as 64 bits
+- _limitation_: limb size is _fixed_ as 64 bits
 - numbers smaller than a certain size (5 limbs) are stored in the `mpz_t`
   structure for better multithreading (avoids most dynamic allocations)
 - the file [bitops64.h](bitops64.h), not part of mini-gmp, contains some
@@ -42,13 +43,13 @@ As compared to `mini-gmp`, `mini-gmp-plus` has the following differences:
   VisualC++ using these compiler's intrinsics
 - `mini-gmp-plus` is compiled as a dynamic library
 - [CMakeLists.txt](CMakeLists.txt) optionally builds and runs non-regression
-  tests using CTest, use `cmake -D-DMINI_GMP_PLUS_WITH_TESTS=1` to compile and
+  tests using CTest, use `cmake -DMINI_GMP_PLUS_WITH_TESTS=1` to compile and
   run the testsuite.
 - The [github action](.github/workflows/build.yml) builds and runs the testsuite
-  systematically. Under Windows, the github action installs gmp (through `vcpkg`)
+  systematically. Under Windows, the github action installs `gmp` (through `vcpkg`)
   and declares it (through `pkgconf`) so that
   [tests/CMakeLists.txt](tests/CMakeLists.txt) sees it. Note that `gmp`
   is only needed if you want to run the non-regression testsuite.
 
 
-Bruno Lévy, November 2025
+_Bruno Lévy, November 2025_
