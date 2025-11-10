@@ -12,10 +12,24 @@ Design rationale
 ----------------
 In numerical geometry, one manipulates numbers that are relatively
 small (a few 64-bit limbs), so Karatsuba multiplication is not
-needed. On the other hand, it is interesting to avoid dynamic
-allocation, hence numbers smaller than a certain threshold (that
+needed, hence `mini-gmp` suffices. On the other hand, it is interesting
+to avoid dynamic allocation, hence numbers smaller than a certain threshold (that
 corresponds to 5 64-bits numbers by default) are allocated on the
-stack.
+stack. Modern processors have some instructions that can significantly optimize
+some multi-precision operations, such as finding the number of leading and
+trailing zeroes in an integer, shifting 128 bit numbers, multiplying two 64-bit
+numbers and obtaining the 128-bits result, or adding 64-bit numbers and
+propagating the carry in multi-limb operations. While 64-bit add/subtract with
+carry propagation is recognized and optimized by modern compilers, it is not the
+case for the other operations, that are implemented by some compiler-dependent
+intrinsics. For this reason, I needed to create a new [bitops64.h](bitopts64.h)
+file to abstract them. These two modifications (_local storage_ and
+_64 bits intrinsics_) introduced a couple of very simple yet not completely
+trivial changes (I must confess I did not have them right the first time), so it
+is important - I would say _vital_ - to be able to run the testsuite. For this
+reason I also created new `CMakeLists.txt` files as well as a github action that
+runs the (already existing, thank you !) mini-gmp testsuite under Linux,Mac
+and Windows.
 
 Features and specificities
 --------------------------
@@ -27,11 +41,14 @@ As compared to `mini-gmp`, `mini-gmp-plus` has the following differences:
   wrappers for efficient bit operations on 64-bit numbers, for GCC, Clang and
   VisualC++ using these compiler's intrinsics
 - `mini-gmp-plus` is compiled as a dynamic library
-- [CMakeList.txt](CMakeList.txt) optionally builds and runs non-regression
+- [CMakeLists.txt](CMakeLists.txt) optionally builds and runs non-regression
   tests using CTest, use `cmake -D-DMINI_GMP_PLUS_WITH_TESTS=1` to compile and
   run the testsuite.
-- The github action builds and runs the testsuite systematically. Under Windows,
-  the github action installs gmp (through `vcpkg`) and declares it
-  (through `pkgconf`) so that [tests/CMakeLists.txt](tests/CMakeLists.txt)
-  sees it. Note that `gmp` is only needed if you want to run the non-regression
-  testsuite.
+- The [github action](.github/workflows/build.yml) builds and runs the testsuite
+  systematically. Under Windows, the github action installs gmp (through `vcpkg`)
+  and declares it (through `pkgconf`) so that
+  [tests/CMakeLists.txt](tests/CMakeLists.txt) sees it. Note that `gmp`
+  is only needed if you want to run the non-regression testsuite.
+
+
+Bruno Lévy, November 2025
