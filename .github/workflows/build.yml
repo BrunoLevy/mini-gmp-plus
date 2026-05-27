@@ -15,14 +15,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, macos-15, windows-2025]
+        os: [ubuntu-24.04, macos-15, windows-2025-vs2026]
         config: [Debug, Release]
         include:
           - os: macos-15
             name: macOS
           - os: ubuntu-24.04
             name: Linux
-          - os: windows-2025
+          - os: windows-2025-vs2026
             name: Windows
 
     steps:
@@ -65,7 +65,7 @@ jobs:
            vcpkg install gmp
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: recursive
 
